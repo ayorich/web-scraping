@@ -1,11 +1,30 @@
-const browser = await puppeteer.launch({
-  headless: false,
-});
-const page = await browser.newPage();
-await page.goto("https://instagram.com");
-await page.waitForTimeout(1000);
+const puppeteer = require("puppeteer");
 
-await page.waitForSelector('input[name="username"]');
-await page.type('input[name="username"]', "Hayo_man");
-await page.type('input[name="password"]', "12345");
-await page.click("#loginForm > div > div:nth-child(3) > button");
+(async () => {
+  const BASE_URL = "https://twitter.com/";
+  const LOGIN_URL = "https://twitter.com/login";
+  const USERNAME = "altumcode";
+  const PASSWORD = "thisisjustatest";
+
+  const browser = await puppeteer.launch({
+    headless: false,
+  });
+  const page = await browser.newPage();
+  await page.goto(LOGIN_URL);
+
+  await page.waitForSelector('name="session[username_or_email]"');
+  await page.type('name="session[username_or_email]"', USERNAME, { delay: 25 });
+
+  await page.type(
+    'form[class="t1-form clearfix signin js-signin"] input[name="session[password]"]',
+    PASSWORD,
+    { delay: 25 }
+  );
+  await page.click(
+    'button[type="submit"][class="submit EdgeButton EdgeButton--primary EdgeButtom--medium"]'
+  );
+
+  debugger;
+
+  // await browser.close();
+})();
