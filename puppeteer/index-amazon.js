@@ -1,4 +1,4 @@
-const amazon = require("./amazon");
+const amazon = require("../amazon");
 
 (async () => {
   await amazon.initialize();
