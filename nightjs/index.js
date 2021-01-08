@@ -1,20 +1,11 @@
-const Nightmare = require("nightmare");
-const nightmare = Nightmare({ show: true });
+const ycombinator = require("./ycombinator");
 
 (async () => {
-  try {
-    await nightmare.goto("https://duckduckgo.com");
+  await ycombinator.initialize();
 
-    await nightmare.type("#search_form_input_homepage", "github nightmare");
-    await nightmare.click("#search_button_homepage");
-    await nightmare.wait("#r1-0 a.result__a");
-    let link = await nightmare.evaluate(
-      () => document.querySelector("#r1-0 a.result__a").href
-    );
-    await nightmare.end();
+  let articles = await ycombinator.getArticles(65);
 
-    console.log(link);
-  } catch (error) {
-    console.error("Search failed:", error);
-  }
+  console.log(articles);
+
+  debugger;
 })();
